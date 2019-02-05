@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
@@ -9,6 +9,7 @@
     </head>
     <body class="h-100">
         {%block header %}{% endblock %}
+        {% block pageTitle %}{% endblock %}
         {% block body %}{% endblock %}
         {%block footer %}{% endblock %}
         {% block javascripts %}{% endblock %}
