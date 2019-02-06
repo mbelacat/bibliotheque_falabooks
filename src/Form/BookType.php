@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Book;
+use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +20,6 @@ class BookType extends AbstractType
             ->add('releaseDate')
             ->add('nbPage')
             ->add('available')
-            ->add('user')
             ->add('category')
         ;
     }
