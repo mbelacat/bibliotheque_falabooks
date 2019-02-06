@@ -1,3 +1,26 @@
 {% extends "layout.html.twig" %}
+{% block title %}Bibliothèque FalaBooks{% endblock %}
 
-{% block pageTitle %}Bibliothèque FalaBooks{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-center"><a href=>Les prêts</a></h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="text-center"><a href={{ path('users') }}>Les utilisateurs</a></h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

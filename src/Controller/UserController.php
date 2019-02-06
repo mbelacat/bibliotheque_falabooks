@@ -17,7 +17,7 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/user", name="user")
+     * @Route("/users", name="users")
      */
     public function index()
     {
