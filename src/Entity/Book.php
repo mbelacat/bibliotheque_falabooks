@@ -51,15 +51,8 @@ class Book
      */
     private $available;
 
-    /**
-     * @ORM\Column(type="object", nullable=true)
-     */
-    private $user;
 
-    /**
-     * @ORM\Column(type="object")
-     */
-    private $category;
+
 
     public function getId(): ?int
     {
@@ -150,27 +143,5 @@ class Book
         return $this;
     }
 
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    public function setUser($user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    public function setCategory($category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
+  
 }
