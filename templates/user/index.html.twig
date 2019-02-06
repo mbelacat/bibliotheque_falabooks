@@ -1,0 +1,35 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Les emprunteurs - Falabooks{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Modifier</th>
+          <th>Supprimer</th>
+        </tr>
+      </thead>
+      <!-- <tbody>
+        {% for user in users if user.active %}
+          <tr>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.email }}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5">Aucun emprunteur</td>
+          </tr>
+        {% endfor %}
+      </tbody> -->
+    </table>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block header %}
+          <div class="h-100 d-flex flex-column justify-content-between">
+            <div class="">
+              <div class="nav-scroller py-1 bg-primary">
+                <nav class="nav d-flex justify-content-between">
+                  <a class="p-2 text-white" href="#">Les emprunteurs</a>
+                </nav>
+              </div>
+              <div class="jumbotron text-center">
+                <h1><a class="blog-header-logo text-dark" href="{{ path('home') }}">La bibliothèque FalaBooks</a></h1>
+              </div>
+            </div>
+            <div class="container">
+{% endblock %}
+
+
+{% block footer %}
+            </div>
+            <footer class="blog-footer" style="padding: 2.5rem 0;color: #999;text-align: center;background-color: #f9f9f9;border-top: .05rem solid #e5e5e5;">
+              <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+              <p>
+                <a href="#">Retour en haut</a>
+              </p>
+            </footer>
+          </div>
+  {% endblock %}
