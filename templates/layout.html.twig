@@ -5,7 +5,11 @@
             <div class="">
               <div class="nav-scroller py-1 bg-primary">
                 <nav class="nav d-flex justify-content-between">
+                  {% if current_menu is defined and current_menu == 'user' %}
                   <a class="p-2 text-white" href="#">Les emprunteurs</a>
+                  {% elseif current_menu is defined and current_menu == 'pret' %}
+                  <a class="p-2 text-white" href="#">Emprunter un livre</a>
+                  {% endif %}
                 </nav>
               </div>
               <div class="jumbotron text-center">
