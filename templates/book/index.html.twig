@@ -1,42 +1,52 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}Book index{% endblock %}
 
 {% block body %}
-    <h1>Book index</h1>
+    <h1>Liste des livres</h1>
+
+      <div class="d-flex justify-content-between">
+        <div class="">
+          <a class="badge badge-primary p-3" href="{{ path('book_new') }}">Create new</a>
+        </div>
+
+        <div class="input-group mb-2 col-sm-4">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary" type="button">Tri</button>
+          </div>
+          <form class="" action="index.html" method="post">
+            <select class="custom-select" id="inputGroupSelect03">
+              <option selected> par catégorie</option>
+              {% for book in books %}
+                <option value="1">{{ book.category }}</option>
+                {% endfor %}
+            </select>
+          </form>
+          
+        </div>
+      </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Editor</th>
-                <th>Summary</th>
-                <th>ReleaseDate</th>
-                <th>NbPage</th>
-                <th>Available</th>
-                <th>User</th>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Résumé</th>
                 <th>Category</th>
+                <th>Available</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for book in books %}
             <tr>
-                <td>{{ book.id }}</td>
-                <td>{{ book.title }}</td>
+                <td><a href="{{ path('book_show', {'id': book.id}) }}"> {{ book.title }}</a></td>
                 <td>{{ book.author }}</td>
-                <td>{{ book.editor }}</td>
                 <td>{{ book.summary }}</td>
-                <td>{{ book.releaseDate ? book.releaseDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ book.nbPage }}</td>
-                <td>{{ book.available ? 'Yes' : 'No' }}</td>
-                <td>{{ book.user }}</td>
                 <td>{{ book.category }}</td>
+                <td>{{ book.available ? '<button type="button"  class="btn btn-success">Dispo</button>' : '<button type="button" type="button"  class="btn btn-danger">Non dispo</button>>' }}</button></td>
                 <td>
-                    <a href="{{ path('book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
+                  <button type="button" class="btn btn-primary"><a href="{{ path('book_edit', {'id': book.id}) }}">edit</a></button>
                 </td>
             </tr>
         {% else %}
@@ -47,5 +57,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('book_new') }}">Create new</a>
+
 {% endblock %}

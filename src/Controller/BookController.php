@@ -11,15 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/book")
+ * @Route("/books")
  */
 class BookController extends AbstractController
 {
     /**
-     * @Route("/books", name="book_index", methods={"GET"})
+     * @Route("/", name="book_index", methods={"GET"})
      */
     public function index(BookRepository $bookRepository): Response
-    {
+    {   
         return $this->render('book/index.html.twig', [
             'books' => $bookRepository->findAll(),
         ]);
@@ -49,7 +49,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("books/{id}", name="book_show", methods={"GET"})
+     * @Route("/{id}", name="book_show", methods={"GET"})
      */
     public function show(Book $book): Response
     {
@@ -59,7 +59,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("books/{id}/edit", name="book_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="book_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Book $book): Response
     {
@@ -81,7 +81,7 @@ class BookController extends AbstractController
     }
 
     /**
-     * @Route("books/{id}", name="book_delete", methods={"DELETE"})
+     * @Route("/{id}", name="book_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Book $book): Response
     {
