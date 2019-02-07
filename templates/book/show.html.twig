@@ -1,9 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Book{% endblock %}
+
+{% block title %}
+<td>{{ book.id }}</td>
+{% endblock %}
 
 {% block body %}
-    <h1>Book</h1>
+
+<h1>{{ book.title }}</h1>
 
     <table class="table">
         <tbody>
@@ -41,7 +45,7 @@
             </tr>
             <tr>
                 <th>User</th>
-                <td>{{ book.user }}</td>
+                <!-- <td> book.user </td> -->
             </tr>
             <tr>
                 <th>Category</th>
