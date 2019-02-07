@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ user.firstname }} {{ user.lastname }} - Emprunteur - Falabooks{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-end mb-4">
+  <a href="{{path('users')}}" class="btn btn-success">
+    <span class="d-none d-md-block">Liste des emprunteurs</span>
+    <span class="d-block d-md-none"><i class="fas fa-arrow-left"></i></span>
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-8">
+    <div class="table-responsive">
+        <table class="table table-striped ">
+          <thead class="thead-dark">
+            <tr class="d-flex">
+              <th class="col-5">Titre</th>
+              <th class="col-3">Auteur</th>
+              <th class="col-2">Date d'emprunt</th>
+              <th class="col-2">Date de retour</th>
+            </tr>
+          </thead>
+          <tbody>
+
+              <tr class="d-flex">
+                <td class="col-5"></td>
+                <td class="col-3"></td>
+                <td class="col-2"></td>
+                <td class="col-2"></td>
+              </tr>
+
+          </tbody>
+        </table>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header text-center">
+          <h5>Informations</h5>
+      </div>
+      <div class="card-body">
+        <p>Nom : <span class="font-weight-bold">{{ user.lastname }}</span></p>
+        <p>Prénom : <span class="font-weight-bold">{{ user.firstname }}</span></p>
+        <p>Identifiant : <span class="font-weight-bold">{{ user.login }}</span></p>
+        <p class="card-text">Email : <span class="font-weight-bold">{{ user.email }}</span></p>
+      </div>
+      <div class="card-footer text-center">
+        <a href="#" class="btn btn-primary">Editer la fiche emprunteur</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="card">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs id="myTab" role="tablist"">
+      <li class="nav-item">
+        <a class="nav-link active" href="#info" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true">Informations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#emprunts" id="emprunts-tab" data-toggle="tab" href="#emprunts" role="tab" aria-controls="emprunts" aria-selected="false">Emprunts</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body tab-content">
+    <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+      <h5 class="card-title">Fiche de renseignements</h5>
+      <p>Nom : <span class="font-weight-bold">{{ user.lastname }}</span></p>
+      <p>Prénom : <span class="font-weight-bold">{{ user.firstname }}</span></p>
+      <p>Identifiant : <span class="font-weight-bold">{{ user.login }}</span></p>
+      <p class="card-text">Email : <span class="font-weight-bold">{{ user.email }}</span></p>
+    </div>
+    <div class="tab-pane fade" id="emprunts" role="tabpanel" aria-labelledby="emprunts-tab">
+      <h5 class="card-title">Les emprunts</h5>
+    </div>
+  </div>
+</div> -->
+
+{% endblock %}
