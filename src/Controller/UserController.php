@@ -26,7 +26,7 @@ class UserController extends AbstractController
         // look for *all* User objects
         $users = $repository->findAll();
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',"users"=> $users
+            'controller_name' => 'UserController',"users"=> $users, "current_menu" => "user"
         ]);
     }
 
@@ -38,7 +38,7 @@ class UserController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(User::class);
         // look for User objects by Id
         $user = $repository->find($id);
-        return $this->render('user/single.html.twig', ["user"=> $user
+        return $this->render('user/single.html.twig', ["user"=> $user, "current_menu" => "user"
         ]);
     }
 
