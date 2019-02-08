@@ -3,59 +3,94 @@
 {% block title %}Book index{% endblock %}
 
 {% block body %}
-    <h1>Liste des livres</h1>
-
-      <div class="d-flex justify-content-between">
-        <div class="">
-          <a class="badge badge-primary p-3" href="{{ path('book_new') }}">Create new</a>
-        </div>
-
-        <div class="input-group mb-2 col-sm-4">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button">Tri</button>
-          </div>
-          <form class="" action="index.html" method="post">
-            <select class="custom-select" id="inputGroupSelect03">
-              <option selected> par catégorie</option>
-              {% for book in books %}
-                <option value="1">{{ book.category }}</option>
-                {% endfor %}
-            </select>
-          </form>
-          
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Résumé</th>
-                <th>Category</th>
-                <th>Available</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="d-flex mb-4">
+  <h2>Liste des livres</h2>
+</div>
+<div class="d-flex mb-4 justify-content-between">
+  <a href="{{path('book_new')}}" class="btn btn-primary">
+    <span class="d-none d-md-block">Ajouter un livre</span>
+    <span class="d-block d-md-none"><i class="fas fa-arrow-left"></i></span>
+  </a>
+  <div class="">
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary" type="button">Tri</button>
+      </div>
+      <form class="" action="index.html" method="post">
+        <select class="custom-select" id="inputGroupSelect03">
+          <option selected>Par catégorie</option>
+          {% for book in books %}
+            <option value="1">{{ book.category }}</option>
+          {% endfor %}
+        </select>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr class="d-flex">
+          <th class="col-3">Catégorie</th>
+          <th class="col-3">Titre</th>
+          <th class="col-2">Auteur</th>
+          <th class="col-2 text-center">Editer</th>
+          <th class="col-2 text-center">Emprunter</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for book in books %}
-            <tr>
-                <td><a href="{{ path('book_show', {'id': book.id}) }}"> {{ book.title }}</a></td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.summary }}</td>
-                <td>{{ book.category }}</td>
-                <td>{{ book.available ? '<button type="button"  class="btn btn-success">Dispo</button>' : '<button type="button" type="button"  class="btn btn-danger">Non dispo</button>>' }}</button></td>
-                <td>
-                  <button type="button" class="btn btn-primary"><a href="{{ path('book_edit', {'id': book.id}) }}">edit</a></button>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
+          <tr class="d-flex">
+            <td class="col-3 p-0"><a class="d-block text-decoration-none p-3" href="{{ path('book_show', {'id': book.id}) }}">{{ book.category }}</a></td>
+            <td class="col-3 p-0"><a class="d-block text-decoration-none p-3" href="{{ path('book_show', {'id': book.id}) }}">{{ book.title }}</a></td>
+            <td class="col-2 p-0"><a class="d-block text-decoration-none p-3" href="{{ path('book_show', {'id': book.id}) }}">{{ book.author }}</a></td>
+            <td class="col-2 text-center"><a href="{{ path('book_edit', {'id': book.id}) }}"><i class="fas fa-edit fa-2x"></i></a> </td>
+            <td class="col-2 text-center">
+              <!-- Button trigger modal -->
+              {% if book.available %}
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+                Emprunter
+              </button>
+              {% else %}
+              <button type="button" class="btn btn-danger">
+                Indisponible
+              </button>
+              {% endif %}
+            </td>
+
+          </tr>
+          {% else %}
+              <tr>
+                  <td colspan="5">La bibliothèque est vide.</td>
+              </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
+</div>
+
+
 
 
 {% endblock %}
