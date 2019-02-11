@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use App\Form\SortByBookCategoryType;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 /**
  * @Route("/books")
@@ -18,10 +20,25 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="book_index", methods={"GET"})
      */
-    public function index(BookRepository $bookRepository): Response
-    {   
+    public function index(BookRepository $bookRepository, Request $request): Response
+    {
+
+        $form = $this->createForm(SortByBookCategoryType::class);
+        $form->handleRequest($request);
+        $category = $form->getData();
+        dump($category);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //   return $this->render('book/index.html.twig', [
+        //       'books' => $bookRepository->findByCategory($category),
+        //       "current_menu" => "pret",
+        //       'form' => $form->createView(),
+        //   ]);
+        // }
         return $this->render('book/index.html.twig', [
             'books' => $bookRepository->findAll(),
+            "current_menu" => "pret",
+            'form' => $form->createView(),
+            'category' => $category,
         ]);
     }
 
@@ -55,6 +72,7 @@ class BookController extends AbstractController
     {
         return $this->render('book/show.html.twig', [
             'book' => $book,
+            "current_menu" => "pret",
         ]);
     }
 
@@ -93,4 +111,7 @@ class BookController extends AbstractController
 
         return $this->redirectToRoute('book_index');
     }
+
+
+
 }

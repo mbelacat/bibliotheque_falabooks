@@ -3,6 +3,20 @@
 {% block title %}Book index{% endblock %}
 
 {% block body %}
+
+    <h1>Liste des livres</h1>
+
+      <div class="d-flex justify-content-between">
+        <div class="">
+          <a class="badge badge-primary p-3" href="{{ path('book_new') }}">Create new</a>
+        </div>
+        <div class="input-group mb-2 col-sm-4">
+          {{ form_start(form) }}
+              {{ form_widget(form) }}
+              <button class="btn">{{ button_label|default('valider') }}</button>
+          {{ form_end(form) }}
+        </div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -12,6 +26,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+
       </div>
       <div class="modal-body">
         ...
@@ -89,8 +104,4 @@
       </tbody>
     </table>
 </div>
-
-
-
-
 {% endblock %}
