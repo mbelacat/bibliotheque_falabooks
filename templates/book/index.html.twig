@@ -4,25 +4,16 @@
 
 {% block body %}
     <h1>Liste des livres</h1>
-
+    {{ dump(category.books) }}
       <div class="d-flex justify-content-between">
         <div class="">
           <a class="badge badge-primary p-3" href="{{ path('book_new') }}">Create new</a>
         </div>
-
         <div class="input-group mb-2 col-sm-4">
-          <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary" type="button">Tri</button>
-          </div>
-          <form class="" action="index.html" method="post">
-            <select class="custom-select" id="inputGroupSelect03">
-              <option selected> par catégorie</option>
-              {% for book in books %}
-                <option value="1">{{ book.category }}</option>
-                {% endfor %}
-            </select>
-          </form>
-          
+          {{ form_start(form) }}
+              {{ form_widget(form) }}
+              <button class="btn">{{ button_label|default('valider') }}</button>
+          {{ form_end(form) }}
         </div>
       </div>
 
