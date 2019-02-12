@@ -57,6 +57,11 @@ class Book
      */
     private $author;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="books")
+     */
+    private $borrower;
+
 
 
 
@@ -158,6 +163,23 @@ class Book
     {
         $this->author = $author;
 
+        return $this;
+    }
+
+    public function getBorrower(): ?User
+    {
+        return $this->borrower;
+    }
+
+    public function setBorrower(?User $borrower): self
+    {
+        $this->borrower = $borrower;
+        if($borrower) {
+          $this->setAvailable(0);
+        }
+        else {
+          $this->setAvailable(1);
+        }
         return $this;
     }
 

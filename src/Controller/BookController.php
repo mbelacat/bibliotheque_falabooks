@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\User;
 use App\Form\BookType;
+use App\Form\EmpruntType;
 use App\Form\SortByBookCategoryType;
+
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +23,10 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="book_index", methods={"GET"})
      */
+
     public function index(BookRepository $bookRepository, Request $request): Response
     {
-
+        $formBorrow = $this->createForm(EmpruntType::class); //creation du formulaire d'action d'emprunt
         $form = $this->createForm(SortByBookCategoryType::class);
         $form->handleRequest($request);
         $category = $form->getData();
@@ -34,12 +38,15 @@ class BookController extends AbstractController
         //       'form' => $form->createView(),
         //   ]);
         // }
-        return $this->render('book/index.html.twig', [
+
+            return $this->render('book/index.html.twig', [
+            'formBorrow' => $formBorrow->createView(),
             'books' => $bookRepository->findAll(),
             "current_menu" => "pret",
             'form' => $form->createView(),
             'category' => $category,
         ]);
+
     }
 
     /**
@@ -113,5 +120,35 @@ class BookController extends AbstractController
     }
 
 
+    /**
+     * @Route("/emprunter/{id}", name="book_borrow", requirements={"id"="\d+"}, methods={"GET","POST"})
+     */
+    public function emprunt($id, Request $request): Response
+    {
+      $book = $this->getDoctrine()->getRepository(Book::class)->findBookAndUser($id);
+       if(!$book) {
+         throw $this->createNotFoundException("Ce livre n'existe pas");
+       }
+       //var_dump($request->query);
+       $form = $this->createForm(EmpruntType::class);
+       $form->handleRequest($request);
+       if ($form->isSubmitted() && $form->isValid()) {
+         $data = $form->getData();
+         //var_dump($data);
+         $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["login" => $data["login"]]);
+         //var_dump($user);
+         if(!$user) {
+           $this->addFlash("danger", "Ce N° d'identification n'est pas valide");
+         }
+         else {
+           $book->setBorrower($user);
+           $entityManager = $this->getDoctrine()->getManager();
+           $entityManager->persist($book);
+           $entityManager->flush();
+           $this->addFlash("success", "Le livre est emprunté");
+         }
+       }
 
+       return $this->redirectToRoute('book_index');
+    }
 }
