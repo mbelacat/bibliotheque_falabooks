@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Book;
-use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -20,15 +19,16 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
-    /**
-     * @return Book[] Returns an array of Book objects
-     */
+    // /**
+    //  * @return Book[] Returns an array of Book objects
+    //  */
 
-    public function findByCatégory($category)
+    public function findByCategory($category)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.category = :category')
-            ->setParameter('category', $value)
+            ->leftJoin('b.category', 'c')
+            ->andWhere('b.category = :val')
+            ->setParameter('val', $category)
             ->orderBy('b.id', 'ASC')
             // ->setMaxResults(10)
             ->getQuery()
