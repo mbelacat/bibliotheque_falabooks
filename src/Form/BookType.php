@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class BookType extends AbstractType
@@ -35,6 +36,7 @@ class BookType extends AbstractType
               'label' => 'Résumé',
             ])
             ->add('releaseDate', DateType::class, [
+              "widget" => "single_text",
               'label' => 'Date de parution',
             ])
             ->add('nbPage', IntegerType::class, [
@@ -42,9 +44,12 @@ class BookType extends AbstractType
             ])
             ->add('available', HiddenType::class, [
               'data'    => 'true',
-              ])
+            ])
             ->add('category',null, [
               'label' => 'La catégorie',
+            ])
+            ->add("Enregistrer", SubmitType::class, [
+              'attr' => ['class' => 'btn btn-success']
             ])
         ;
     }
@@ -53,6 +58,7 @@ class BookType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Book::class,
+            'attr'=> ['class' => 'w-75 '],
         ]);
     }
 }
