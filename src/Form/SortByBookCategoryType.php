@@ -15,8 +15,6 @@ class SortByBookCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        // ->setAction($this->generateUrl('book_index'))
-        // ->setMethod('GET')
         ->add('name',EntityType::class, [
           'class' => Category::class,
           'label'  => false,

@@ -62,6 +62,16 @@ class Book
      */
     private $borrower;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $borrowingDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $returnDate;
+
 
 
 
@@ -180,6 +190,30 @@ class Book
         else {
           $this->setAvailable(1);
         }
+        return $this;
+    }
+
+    public function getBorrowingDate(): ?\DateTimeInterface
+    {
+        return $this->borrowingDate;
+    }
+
+    public function setBorrowingDate(?\DateTimeInterface $borrowingDate): self
+    {
+        $this->borrowingDate = $borrowingDate;
+
+        return $this;
+    }
+
+    public function getReturnDate(): ?\DateTimeInterface
+    {
+        return $this->returnDate;
+    }
+
+    public function setReturnDate(?\DateTimeInterface $returnDate): self
+    {
+        $this->returnDate = $returnDate;
+
         return $this;
     }
 

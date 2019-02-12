@@ -22,15 +22,16 @@
               <th class="col-2">Date de retour</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
 
-              <tr class="d-flex">
-                <td class="col-5"></td>
-                <td class="col-3"></td>
-                <td class="col-2"></td>
-                <td class="col-2"></td>
-              </tr>
-
+              {% for book in user.books %}
+            <tr class="d-flex">
+              <td class="col-5">{{book.title }}</td>
+              <td class="col-3">{{book.author}} </td>
+              <td class="col-2"> </td>
+              <td class="col-2"> </td>
+            </tr>
+              {% endfor %}
           </tbody>
         </table>
     </div>
