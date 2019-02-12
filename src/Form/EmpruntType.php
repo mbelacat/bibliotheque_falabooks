@@ -20,9 +20,7 @@ class EmpruntType extends AbstractType
         ->add('send', SubmitType::class, [
           'label' => 'Enregistrer',
         ])
-        ->add('id', HiddenType::class, [
-          'data'    => '',
-          ])
+        
         ;
     }
 
