@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SortByBookCategoryType extends AbstractType
 {
@@ -19,8 +19,11 @@ class SortByBookCategoryType extends AbstractType
         // ->setMethod('GET')
         ->add('name',EntityType::class, [
           'class' => Category::class,
-          'choice_label' => 'name',
-          'choice_value' => 'id',
+          'label'  => false,
+
+          ])
+        ->add("Tier", SubmitType::class, [
+          'attr' => ['class' => 'btn btn-success ']
         ])
         ;
     }
@@ -28,9 +31,9 @@ class SortByBookCategoryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-          'data_class' => Category::class,
-          'method'=> 'get',
+          // 'data_class' => Category::class,
           "csrf_protection" => false,
+          'attr' => ['class' => 'form-inline my-3']
         ]);
     }
 

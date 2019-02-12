@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BookController extends AbstractController
 {
     /**
-     * @Route("/", name="book_index", methods={"GET"})
+     * @Route("/", name="book_index", methods={"GET", "POST"})
      */
 
     public function index(BookRepository $bookRepository, Request $request): Response
@@ -29,24 +29,17 @@ class BookController extends AbstractController
         $formBorrow = $this->createForm(EmpruntType::class); //creation du formulaire d'action d'emprunt
         $form = $this->createForm(SortByBookCategoryType::class);
         $form->handleRequest($request);
-        $category = $form->getData();
-        dump($category);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //   return $this->render('book/index.html.twig', [
-        //       'books' => $bookRepository->findByCategory($category),
-        //       "current_menu" => "pret",
-        //       'form' => $form->createView(),
-        //   ]);
-        // }
-
-            return $this->render('book/index.html.twig', [
-            'formBorrow' => $formBorrow->createView(),
-            'books' => $bookRepository->findAll(),
+        $category = null;
+         if ($form->isSubmitted() && $form->isValid()) {
+             $category = $form->getData()["name"];
+          }
+          $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($category);
+        return $this->render('book/index.html.twig', [
+            'books' => $books,
             "current_menu" => "pret",
             'form' => $form->createView(),
-            'category' => $category,
-        ]);
-
+            'formBorrow' => $formBorrow->createView(),
+            ]);
     }
 
     /**
@@ -69,6 +62,7 @@ class BookController extends AbstractController
         return $this->render('book/new.html.twig', [
             'book' => $book,
             'form' => $form->createView(),
+            'current_menu' => 'user',
         ]);
     }
 
@@ -93,7 +87,6 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('book_index', [
                 'id' => $book->getId(),
             ]);

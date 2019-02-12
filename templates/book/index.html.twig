@@ -7,22 +7,17 @@
   <h2>Liste des livres</h2>
 </div>
 <div class="d-flex mb-4 justify-content-between">
-  <a href="{{path('book_new')}}" class="btn btn-primary">
-    <span class="d-none d-md-block">Ajouter un livre</span>
-    <span class="d-block d-md-none"><i class="fas fa-arrow-left"></i></span>
-  </a>
-  <div class="">
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" type="button">Tri</button>
-      </div>
-      <div class="input-group ">
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn">{{ button_label|default('valider') }}</button>
-        {{ form_end(form) }}
-      </div>
-    </div>
+  <div class="d-flex align-items-center">
+    <a href="{{path('book_new')}}" class="btn btn-primary">
+      <span class="d-none d-md-block">Ajouter un livre</span>
+      <span class="d-block d-md-none"><i class="fas fa-arrow-left"></i></span>
+    </a>
+  </div>
+
+  <div class="form-group  ">
+    {{ form_start(form) }}
+        {{ form_row(form) }}
+    {{ form_end(form) }}
   </div>
 </div>
 

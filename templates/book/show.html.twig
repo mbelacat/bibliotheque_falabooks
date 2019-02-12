@@ -2,49 +2,40 @@
 
 
 {% block title %}
-<td>{{ book.id }}</td>
+<td>{{ book.id }} </td>
 {% endblock %}
 
 {% block body %}
 
-<h1>{{ book.title }}</h1>
-
+<h1>{{ book.title }}   <button type="text" class="btn btn-{{ book.available ? 'success' : 'danger' }}">Disponibilité</button>
+</h1>
+<div class="">
+    <!-- Loué à <a href=" path('user')">book.user</a> -->
+</div>
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ book.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ book.title }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
+                <th>Auteur</th>
                 <td>{{ book.author }}</td>
             </tr>
             <tr>
-                <th>Editor</th>
+                <th>Editeur</th>
                 <td>{{ book.editor }}</td>
             </tr>
             <tr>
-                <th>Summary</th>
+                <th>Résumé</th>
                 <td>{{ book.summary }}</td>
             </tr>
             <tr>
-                <th>ReleaseDate</th>
-                <td>{{ book.releaseDate ? book.releaseDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Date de parution</th>
+                <td>{{ book.releaseDate ? book.releaseDate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>NbPage</th>
+                <th>Nombre de pages</th>
                 <td>{{ book.nbPage }}</td>
             </tr>
             <tr>
-                <th>Available</th>
-                <td>{{ book.available ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>User</th>
+                <!-- <th>User</th> -->
                 <!-- <td> book.user </td> -->
             </tr>
             <tr>
@@ -53,10 +44,14 @@
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('book_index') }}">back to list</a>
-
-    <a href="{{ path('book_edit', {'id': book.id}) }}">edit</a>
-
-    {{ include('book/_delete_form.html.twig') }}
+    <!-- put the link to go back/ delete/ edite or make a nav? -->
+    <!-- <div class="btn btn-primary">
+      <a href=" path('book_index') }}">back to list</a>
+    </div>
+    <div class="btn btn-primary">
+      <a href=" path('book_edit', {'id': book.id}) }}">edit</a>
+    </div>
+    <div class="btn btn-primary">
+       include('book/_delete_form.html.twig') }}
+    </div> -->
 {% endblock %}
