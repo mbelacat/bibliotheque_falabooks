@@ -38,6 +38,19 @@ class BookRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findBookAndUser(int $id): ?Book
+   {
+     return $this->createQueryBuilder('b')
+       ->addSelect('u')
+       ->leftJoin('b.borrower', 'u')
+       ->addSelect('c')
+       ->leftJoin('b.category', 'c')
+       ->andWhere('b.id = :id')
+       ->setParameter('id', $id)
+       ->getQuery()
+       ->getOneOrNullResult();
+   }
+
 
     /*
     public function findOneBySomeField($value): ?Book

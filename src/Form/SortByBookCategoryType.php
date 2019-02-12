@@ -32,7 +32,6 @@ class SortByBookCategoryType extends AbstractType
     {
         $resolver->setDefaults([
           // 'data_class' => Category::class,
-          'method'=> 'get',
           "csrf_protection" => false,
           'attr' => ['class' => 'form-inline my-3']
         ]);

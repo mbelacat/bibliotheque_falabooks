@@ -64,7 +64,8 @@
             <td class="col-2 text-center">
               <!-- Button trigger modal -->
               {% if book.available %}
-              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
+              {{ include('book/borrowForm.html.twig')}}
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#emprunter{{book.id}}">
                 Emprunter
               </button>
               {% else %}
