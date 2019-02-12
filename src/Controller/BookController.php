@@ -25,21 +25,22 @@ class BookController extends AbstractController
 
         $form = $this->createForm(SortByBookCategoryType::class);
         $form->handleRequest($request);
-        $category = $form->getData();
-        dump($category);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //   return $this->render('book/index.html.twig', [
-        //       'books' => $bookRepository->findByCategory($category),
-        //       "current_menu" => "pret",
-        //       'form' => $form->createView(),
-        //   ]);
-        // }
+        $category = null;
+         if ($form->isSubmitted() && $form->isValid()) {
+             $category = $form->getData();
+              $category = $category["name"];
+
+             $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($category);
+          }
+          $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($category);
+
         return $this->render('book/index.html.twig', [
-            'books' => $bookRepository->findAll(),
+            'books' => $books,
             "current_menu" => "pret",
             'form' => $form->createView(),
             'category' => $category,
-        ]);
+
+                  ]);
     }
 
     /**

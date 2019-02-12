@@ -3,20 +3,6 @@
 {% block title %}Book index{% endblock %}
 
 {% block body %}
-
-    <h1>Liste des livres</h1>
-
-      <div class="d-flex justify-content-between">
-        <div class="">
-          <a class="badge badge-primary p-3" href="{{ path('book_new') }}">Create new</a>
-        </div>
-        <div class="input-group mb-2 col-sm-4">
-          {{ form_start(form) }}
-              {{ form_widget(form) }}
-              <button class="btn">{{ button_label|default('valider') }}</button>
-          {{ form_end(form) }}
-        </div>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -43,24 +29,17 @@
   <h2>Liste des livres</h2>
 </div>
 <div class="d-flex mb-4 justify-content-between">
-  <a href="{{path('book_new')}}" class="btn btn-primary">
-    <span class="d-none d-md-block">Ajouter un livre</span>
-    <span class="d-block d-md-none"><i class="fas fa-arrow-left"></i></span>
-  </a>
-  <div class="">
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <button class="btn btn-outline-secondary" type="button">Tri</button>
-      </div>
-      <form class="" action="index.html" method="post">
-        <select class="custom-select" id="inputGroupSelect03">
-          <option selected>Par catégorie</option>
-          {% for book in books %}
-            <option value="1">{{ book.category }}</option>
-          {% endfor %}
-        </select>
-      </form>
-    </div>
+  <div class="d-flex align-items-center">
+    <a href="{{path('book_new')}}" class="btn btn-primary">
+      <span class="d-none d-md-block">Ajouter un livre</span>
+      <span class="d-block d-md-none"><i class="fas fa-arrow-left"></i></span>
+    </a>
+  </div>
+
+  <div class="form-group  ">
+    {{ form_start(form) }}
+        {{ form_row(form) }}
+    {{ form_end(form) }}
   </div>
 </div>
 
