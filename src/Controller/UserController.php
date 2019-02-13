@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Entity\Book;
+
 
 
 class UserController extends AbstractController
@@ -38,7 +40,8 @@ class UserController extends AbstractController
     {
         $repository = $this->getDoctrine()->getRepository(User::class);
         // look for User objects by Id
-        $user = $repository->find($id);
+        $user = $repository->findBorrowBookByUser($id);
+        dump($user);
         return $this->render('user/single.html.twig', ["user"=> $user, "current_menu" => "user"
         ]);
     }

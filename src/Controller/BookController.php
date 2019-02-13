@@ -112,7 +112,7 @@ class BookController extends AbstractController
         return $this->redirectToRoute('book_index');
     }
 
-// borrow and return
+
     /**
      * @Route("/emprunter/{id}", name="book_borrow", requirements={"id"="\d+"}, methods={"GET","POST"})
      */
@@ -122,39 +122,45 @@ class BookController extends AbstractController
        if(!$book) {
          throw $this->createNotFoundException("Ce livre n'existe pas");
        }
-       //var_dump($request->query);
        $form = $this->createForm(EmpruntType::class);
        $form->handleRequest($request);
        if ($form->isSubmitted() && $form->isValid()) {
          $data = $form->getData();
-         //var_dump($data);
          $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(["login" => $data["login"]]);
          if(!$user) {
            $this->addFlash("danger", "Ce N° d'identification n'est pas valide");
          }
          else {
-            if($book->getAvailable() === true )
-            {
-                $book->setBorrower($user);
-                $book->setBorrowingDate(new \DateTime('@'.strtotime('now')));
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($book);
-                $entityManager->flush();
-                $this->addFlash("success", "Le livre est emprunté");
-            }else{
-                  $book->setBorrower(null);
-                  $book->setReturnDate(new \DateTime('@'.strtotime('now')));
-                  $entityManager = $this->getDoctrine()->getManager();
-                  $entityManager->persist($book);
-                  $entityManager->flush();
-                  $this->addFlash("success", "Le livre est à nouveau disponible");
-              }
-          }
+           $book->setBorrower($user);
+           $book->setBorrowingDate(new \DateTime('@'.strtotime('now')));
+           $book->setReturnDate(null);
+           $entityManager = $this->getDoctrine()->getManager();
+           $entityManager->persist($book);
+           $entityManager->flush();
+           $this->addFlash("success", "Le livre est emprunté");
+         }
        }
-       return $this->render('category/show.html.twig', [
-              'user'=> $book,
-           ]);
-       // return $this->redirectToRoute('book_index');
+
+       return $this->redirectToRoute('book_index');
     }
 
+    /**
+     * @Route("/return/{id}", name="book_return", requirements={"id"="\d+"}, methods={"GET","POST"})
+     */
+    public function return($id, Request $request): Response
+    {
+      $book = $this->getDoctrine()->getRepository(Book::class)->findBookAndUser($id);
+      if($book->getAvailable() === false)
+      {
+        $book->setBorrower(null);
+        $book->setReturnDate(new \DateTime('@'.strtotime('now')));
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($book);
+        $entityManager->flush();
+        $this->addFlash("success", "Le livre est à nouveau disponible");
+      }else{
+        $this->addFlash("danger", "Ce livre n'a pas été emprunté");
+      }
+      return $this->redirectToRoute('book_index');
+    }
 }

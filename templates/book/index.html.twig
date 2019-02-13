@@ -48,7 +48,7 @@
               </button>
               {% else %}
               <button type="button" class="btn btn-danger" >
-                Indisponible
+                <a href="{{ path('book_return', {'id': book.id}) }}">Indisponible</a>
               </button>
               {% endif %}
             </td>
