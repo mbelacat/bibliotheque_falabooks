@@ -48,6 +48,12 @@ class User
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Library", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $library;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -145,6 +151,18 @@ class User
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getLibrary(): ?Library
+    {
+        return $this->library;
+    }
+
+    public function setLibrary(?Library $library): self
+    {
+        $this->library = $library;
 
         return $this;
     }
