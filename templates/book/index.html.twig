@@ -47,8 +47,8 @@
                 Emprunter
               </button>
               {% else %}
-              <button type="button" class="btn btn-danger">
-                Indisponible
+              <button type="button" class="btn btn-danger" >
+                <a href="{{ path('book_return', {'id': book.id}) }}">Indisponible</a>
               </button>
               {% endif %}
             </td>

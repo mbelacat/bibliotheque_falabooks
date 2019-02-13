@@ -63,10 +63,22 @@ class Book
     private $borrower;
 
     /**
+
      * @ORM\ManyToOne(targetEntity="App\Entity\Library", inversedBy="books")
      * @ORM\JoinColumn(nullable=false)
      */
     private $library;
+    
+     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $borrowingDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $returnDate;
+
 
 
 
@@ -189,6 +201,7 @@ class Book
         return $this;
     }
 
+
     public function getLibrary(): ?Library
     {
         return $this->library;
@@ -197,6 +210,29 @@ class Book
     public function setLibrary(?Library $library): self
     {
         $this->library = $library;
+    }
+
+    public function getBorrowingDate(): ?\DateTimeInterface
+    {
+        return $this->borrowingDate;
+    }
+
+    public function setBorrowingDate(?\DateTimeInterface $borrowingDate): self
+    {
+        $this->borrowingDate = $borrowingDate;
+
+        return $this;
+    }
+
+    public function getReturnDate(): ?\DateTimeInterface
+    {
+        return $this->returnDate;
+    }
+
+    public function setReturnDate(?\DateTimeInterface $returnDate): self
+    {
+        $this->returnDate = $returnDate;
+
 
         return $this;
     }

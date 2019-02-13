@@ -20,7 +20,6 @@ class EmpruntType extends AbstractType
         ->add('send', SubmitType::class, [
           'label' => 'Enregistrer',
         ])
-        
         ;
     }
 

@@ -42,7 +42,6 @@ class CategoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
-
             return $this->redirectToRoute('category_index');
         }
 
