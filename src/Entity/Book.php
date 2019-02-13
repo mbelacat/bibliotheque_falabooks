@@ -62,6 +62,12 @@ class Book
      */
     private $borrower;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Library", inversedBy="books")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $library;
+
 
 
 
@@ -180,6 +186,18 @@ class Book
         else {
           $this->setAvailable(1);
         }
+        return $this;
+    }
+
+    public function getLibrary(): ?Library
+    {
+        return $this->library;
+    }
+
+    public function setLibrary(?Library $library): self
+    {
+        $this->library = $library;
+
         return $this;
     }
 
