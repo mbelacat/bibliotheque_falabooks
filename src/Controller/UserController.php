@@ -6,7 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+ /**
+  * Require ROLE_ADMIN for *every* controller method in this class.
+  *
+  * @IsGranted("ROLE_ADMIN")
+  */
 class UserController extends AbstractController
 {
     /**
@@ -49,10 +55,12 @@ class UserController extends AbstractController
     public function new()
     {
         $user = new User();
-        $user->setLastname('Mbemba')
-        ->setFirstname('Mbela')
-        ->setEmail('mbela.mbemba@gmail.com')
-        ->setLogin('mbela');
+        $user->setLastname('El ammari')
+        ->setFirstname('Fatma')
+        ->setEmail('fatma212@hotmail.fr')
+        ->setLogin('fatma')
+        ->setPassword('$2y$12$mjze21P5MgF5PfRB8vYfD.sCmwWVqrFBtcEdqDO8YDnlA4DxS1vXC')
+        ->setRoles(["ROLE_USER"]);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();

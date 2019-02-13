@@ -46,7 +46,7 @@ class User implements UserInterface
   private $firstname;
 
   /**
-   * @ORM\Column(type="string", length=255)
+   * @ORM\Column(type="string", length=255, unique=true)
    */
   private $login;
 
@@ -57,7 +57,7 @@ class User implements UserInterface
 
   /**
    * @ORM\ManyToOne(targetEntity="App\Entity\Library", inversedBy="users")
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(nullable=true)
    */
   private $library;
 
