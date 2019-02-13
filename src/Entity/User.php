@@ -43,6 +43,11 @@ class User
      */
     private $books;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $status;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -128,6 +133,18 @@ class User
                 $book->setBorrower(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
+    }
+
+    public function setStatus(bool $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
