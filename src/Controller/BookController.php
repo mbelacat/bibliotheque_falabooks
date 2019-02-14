@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\BookType;
 use App\Form\EmpruntType;
 use App\Form\SortByBookCategoryType;
+use App\Form\SearchBookType;
 
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,6 +41,26 @@ class BookController extends AbstractController
             'form' => $form->createView(),
             'formBorrow' => $formBorrow->createView(),
             ]);
+    }
+
+
+    /**
+     * @Route("/search", name="book_search", methods={"GET", "POST"})
+     */
+    public function searchBook(BookRepository $bookRepository, Request $request): Response
+    {
+      $formSearch = $this->createForm(SearchBookType::class);
+      $formSearch->handleRequest($request);
+      $books = null;
+      if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+           $title = $formSearch->getData()["title"];
+           $books = $this->getDoctrine()->getRepository(Book::class)->findBy(['title' => $title ]);
+        }
+      return $this->render('book/search.html.twig', [
+          'books' => $books,
+          "current_menu" => "pret",
+          'formSearch' => $formSearch->createView(),
+          ]);
     }
 
     /**
@@ -85,12 +106,12 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('book_index', [
-                'id' => $book->getId(),
-            ]);
-        }
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $this->getDoctrine()->getManager()->flush();
+        //     return $this->redirectToRoute('book_index', [
+        //         'id' => $book->getId(),
+        //     ]);
+        // }
 
         return $this->render('book/edit.html.twig', [
             'book' => $book,
@@ -163,4 +184,5 @@ class BookController extends AbstractController
       }
       return $this->redirectToRoute('book_index');
     }
+
 }

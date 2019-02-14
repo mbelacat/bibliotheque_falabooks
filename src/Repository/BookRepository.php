@@ -51,7 +51,18 @@ class BookRepository extends ServiceEntityRepository
        ->getOneOrNullResult();
    }
 
-  
+   public function findBySearch(array $search=null)
+   {
+     $request =  $this->createQueryBuilder('b')
+       ->addSelect('c')
+       ->leftJoin('b.category', 'c');
+       if($search[""]) {
+         $request = $request->andWhere('c.id = :id')
+                           ->setParameter('id', $category->getId());
+       }
+       return $request->getQuery()
+       ->getResult();
+   }
 
     /*
     public function findOneBySomeField($value): ?Book
