@@ -1,6 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block header %}
+<div class="d-flex flex-column justify-content-between" style="min-height: 100%;">
+    <div class="">
           <header class="">
             <div class="nav-scroller py-1 bg-primary">
               <nav class="nav d-flex justify-content-between">
@@ -9,6 +11,12 @@
                 {% elseif current_menu is defined and current_menu == 'pret' %}
                 <a class="p-2 text-white" href="#">Emprunter un livre</a>
                 {% endif %}
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                      <a class="btn btn-sm btn-outline-secondary" href="{{path('app_logout')}}">Se deconnecter</a>
+                  {% endif %}
+
+                </div>
               </nav>
             </div>
             <div class="jumbotron text-center">
@@ -18,13 +26,12 @@
           <main class="container">
 {% endblock %}
 
-
 {% block footer %}
           </main>
-            <footer class="blog-footer" style="padding: 2.5rem 0;color: #999;text-align: center;background-color: #f9f9f9;border-top: .05rem solid #e5e5e5;">
-              <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-              <p>
-                <a href="#">Retour en haut</a>
-              </p>
-            </footer>
-  {% endblock %}
+    </div>
+    <footer class="blog-footer" style="padding: 2.5rem 0;color: #999;text-align: center;background-color: #f9f9f9;border-top: .05rem solid #e5e5e5;">
+      <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+      <p><a href="#">Retour en haut</a></p>
+    </footer>
+</div>
+{% endblock %}
