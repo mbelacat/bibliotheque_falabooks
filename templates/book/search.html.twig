@@ -16,19 +16,21 @@
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
-      <thead class="thead-dark">
-        <tr class="d-flex">
-          <th class="col-3">Catégorie</th>
-          <th class="col-3">Titre</th>
-          <th class="col-2">Auteur</th>
+      <thead class="thead-dark w-100">
+        <tr class="d-flex w-100">
+          <th class="col-2 text-left">Catégorie</th>
+          <th class="col-5 text-left">Titre</th>
+          <th class="col-3 text-left">Auteur</th>
+          <th class="col-2 text-left">Bibliothèque</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="w-100">
         {% for book in books %}
           <tr class="d-flex">
-            <td class="col-3 p-0"><a class="d-block text-decoration-none p-3" href="{{ path('book_show', {'id': book.id}) }}">{{ book.category }}</a></td>
-            <td class="col-3 p-0"><a class="d-block text-decoration-none p-3" href="{{ path('book_show', {'id': book.id}) }}">{{ book.title }}</a></td>
-            <td class="col-2 p-0"><a class="d-block text-decoration-none p-3" href="{{ path('book_show', {'id': book.id}) }}">{{ book.author }}</a></td>
+            <td class="col-2 text-left"><a class="d-block text-decoration-none" href="{{ path('book_show', {'id': book.id}) }}">{{ book.category }}</a></td>
+            <td class="col-5 text-left"><a class="d-block text-decoration-none" href="{{ path('book_show', {'id': book.id}) }}">{{ book.title }}</a></td>
+            <td class="col-3 text-left"><a class="d-block text-decoration-none" href="{{ path('book_show', {'id': book.id}) }}">{{ book.author }}</a></td>
+            <td class="col-2 text-left"><a class="d-block text-decoration-none" >{{ book.library }}</a></td>
           </tr>
         {% endfor %}
       </tbody>

@@ -109,12 +109,12 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $this->getDoctrine()->getManager()->flush();
-        //     return $this->redirectToRoute('book_index', [
-        //         'id' => $book->getId(),
-        //     ]);
-        // }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('book_index', [
+                'id' => $book->getId(),
+            ]);
+        }
 
         return $this->render('book/edit.html.twig', [
             'book' => $book,

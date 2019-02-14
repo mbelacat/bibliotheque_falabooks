@@ -6,14 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Entity\Book;
-
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
  /**
   * Require ROLE_ADMIN for *every* controller method in this class.
+  * @IsGranted("ROLE_USER")
   *
-  * @IsGranted("ROLE_ADMIN")
   */
 class UserController extends AbstractController
 {
@@ -34,6 +32,7 @@ class UserController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(User::class);
         // look for *all* User objects
         $users = $repository->findAll();
+        dump($users);
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',"users"=> $users, "current_menu" => "user"
         ]);
@@ -58,12 +57,12 @@ class UserController extends AbstractController
     public function new()
     {
         $user = new User();
-        $user->setLastname('El ammari')
-        ->setFirstname('Fatma')
-        ->setEmail('fatma212@hotmail.fr')
-        ->setLogin('fatma')
+        $user->setLastname('Catteloin')
+        ->setFirstname('Mbela')
+        ->setEmail('mbela@hotmail.fr')
+        ->setLogin('mbela')
         ->setPassword('$2y$12$mjze21P5MgF5PfRB8vYfD.sCmwWVqrFBtcEdqDO8YDnlA4DxS1vXC')
-        ->setRoles(["ROLE_USER"]);
+        ->setRoles(["ROLE_ADMIN"]);
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();

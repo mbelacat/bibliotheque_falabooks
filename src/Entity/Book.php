@@ -68,7 +68,7 @@ class Book
      * @ORM\JoinColumn(nullable=false)
      */
     private $library;
-    
+
      /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -210,6 +210,7 @@ class Book
     public function setLibrary(?Library $library): self
     {
         $this->library = $library;
+        return $this;
     }
 
     public function getBorrowingDate(): ?\DateTimeInterface
