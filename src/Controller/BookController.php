@@ -37,7 +37,7 @@ class BookController extends AbstractController
          if ($form->isSubmitted() && $form->isValid()) {
              $category = $form->getData()["name"];
           }
-          $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($category);
+          $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($this->getUser()->getLibrary(), $category );
         return $this->render('book/index.html.twig', [
             'books' => $books,
             "current_menu" => "pret",

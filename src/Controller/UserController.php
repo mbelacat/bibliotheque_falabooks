@@ -8,9 +8,10 @@ use App\Entity\User;
 use App\Entity\Book;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
  /**
   * Require ROLE_ADMIN for *every* controller method in this class.
-  * @IsGranted("ROLE_USER")
+  * @IsGranted("ROLE_ADMIN")
   *
   */
 class UserController extends AbstractController
@@ -32,7 +33,6 @@ class UserController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(User::class);
         // look for *all* User objects
         $users = $repository->findAll();
-        dump($users);
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',"users"=> $users, "current_menu" => "user"
         ]);
