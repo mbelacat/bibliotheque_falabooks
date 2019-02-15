@@ -39,9 +39,9 @@ class AppFixtures extends Fixture
         // create 20 users! Bam!
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
-            $user->setLastName('El ammari'.$i);
-            $user->setFirstName('Fatma'.$i);
-            $user->setEmail('fatma'.$i.'@gmail.com');
+            $user->setLastName('Mbemba'.$i);
+            $user->setFirstName('Mbela'.$i);
+            $user->setEmail('mbela'.$i.'@gmail.com');
             $user->setLogin('login'.$i);
             $password = $this->encoder->encodePassword($user, 'test'.$i); //cryptage du password
             $user->setPassword($password);
@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
         //$manager->flush();
 
         // create 10 books! Bam!
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $book = new Book();
             $book->setTitle('Titre'.$i);
             $book->setAuthor('Auteur'.$i);
