@@ -33,15 +33,16 @@ class UserRepository extends ServiceEntityRepository
 
    }
 
-   public function findUsersByLibrary(int $id): ?User
+  
+
+   public function findUsersByLibrary(Library $library)
    {
      return $this->createQueryBuilder('u')
        ->addSelect('u')
-       ->leftJoin('u.library', 'l')
-       ->andWhere('u.library = :id')
-       ->setParameter('id', $id)
+       ->andWhere('u.library = :library')
+       ->setParameter('library', $library)
        ->getQuery()
-       ->getOneOrNullResult();
+       ->getResult();
 
    }
 
