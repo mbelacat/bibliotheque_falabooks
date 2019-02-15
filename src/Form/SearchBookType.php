@@ -18,7 +18,7 @@ class SearchBookType extends AbstractType
               'label'  => false,
 
               ])
-            ->add("Tier", SubmitType::class, [
+            ->add("Chercher", SubmitType::class, [
               'attr' => ['class' => 'btn btn-success ']
             ])
         ;

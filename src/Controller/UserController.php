@@ -56,18 +56,22 @@ class UserController extends AbstractController
      */
     public function new()
     {
-        $user = new User();
-        $user->setLastname('Catteloin')
-        ->setFirstname('Mbela')
-        ->setEmail('mbela@hotmail.fr')
-        ->setLogin('mbela')
-        ->setPassword('$2y$12$mjze21P5MgF5PfRB8vYfD.sCmwWVqrFBtcEdqDO8YDnlA4DxS1vXC')
-        ->setRoles(["ROLE_ADMIN"]);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-        // faire un redirect()
-        return $this->render('user/index.html.twig', ["users"=> $user
-        ]);
+      $user = new User();
+      $form = $this->createForm(UserType::class, $user);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->persist($user);
+          $entityManager->flush();
+
+          return $this->redirectToRoute('users');
+      }
+
+      return $this->render('book/new.html.twig', [
+          'book' => $book,
+          'form' => $form->createView(),
+          'current_menu' => 'user',
+      ]);
     }
 }
