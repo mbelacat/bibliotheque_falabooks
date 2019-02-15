@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Book;
 use App\Entity\Category;
+use App\Entity\library;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,11 +49,16 @@ class BookType extends AbstractType
             ->add('category',null, [
               'label' => 'La catégorie',
             ])
+            ->add('library',null, [
+              'label' => 'Dans quelle librairie?',
+            ])
             ->add("Enregistrer", SubmitType::class, [
               'attr' => ['class' => 'btn btn-success']
             ])
         ;
     }
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

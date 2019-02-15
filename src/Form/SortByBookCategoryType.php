@@ -20,7 +20,7 @@ class SortByBookCategoryType extends AbstractType
           'label'  => false,
 
           ])
-        ->add("Tier", SubmitType::class, [
+        ->add("Trier", SubmitType::class, [
           'attr' => ['class' => 'btn btn-success ']
         ])
         ;

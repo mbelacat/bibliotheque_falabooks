@@ -9,8 +9,9 @@
                 <div class="container d-flex align-items-center justify-content-between">
                   <div class="col-8">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                      <a class="navbar-brand" href="#">Bibliothèque {% block library %} {% endblock %}</a>
-
+                      <a class="navbar-brand" href="{{path('home')}}">
+                      {% if app.user is defined %}{{app.user.library }}{% endif %}
+                      </a>
                       <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                           <li class="nav-item {% if current_menu is defined and current_menu == 'pret' %} active{% endif %}">
@@ -31,7 +32,8 @@
             </div>
 
             <div class="jumbotron text-center">
-              <h1><a class="blog-header-logo text-dark" href="{{ path('home') }}">La bibliothèque FalaBooks</a></h1>
+              <h1><a class="blog-header-logo text-dark" href="{{ path('home') }}">
+              </a></h1>
             </div>
           </header>
           <main class="container">

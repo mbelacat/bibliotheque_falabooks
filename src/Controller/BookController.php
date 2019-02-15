@@ -7,13 +7,16 @@ use App\Entity\User;
 use App\Form\BookType;
 use App\Form\EmpruntType;
 use App\Form\SortByBookCategoryType;
+use App\Form\SearchBookType;
 
 use App\Repository\BookRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Knp\Component\Pager\PaginatorInterface;
+use Knp\Bundle\PaginatorBundle\Definition\PaginatorAware;
 
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
@@ -21,13 +24,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  * @IsGranted("ROLE_ADMIN")
  * @Route("/books")
  */
-class BookController extends AbstractController
+class BookController extends Controller
 {
     /**
      * @Route("/", name="book_index", methods={"GET", "POST"})
      */
 
-    public function index(BookRepository $bookRepository, Request $request): Response
+    public function index(PaginatorInterface $paginator, BookRepository $bookRepository, Request $request): Response
     {
         $formBorrow = $this->createForm(EmpruntType::class); //creation du formulaire d'action d'emprunt
         $form = $this->createForm(SortByBookCategoryType::class);
@@ -36,13 +39,45 @@ class BookController extends AbstractController
          if ($form->isSubmitted() && $form->isValid()) {
              $category = $form->getData()["name"];
           }
-          $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($category);
+          $books = $this->getDoctrine()->getRepository(Book::class)->findByCategory($this->getUser()->getLibrary(), $category );
+          /* @var $paginator \Knp\Component\Pager\Paginator */
+          $paginator  = $this->get('knp_paginator');
+
+          // Paginate the results of the query
+        $paginatedBooks = $paginator->paginate(
+            // Doctrine Query, not results
+            $books,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+          );
         return $this->render('book/index.html.twig', [
-            'books' => $books,
+            'books' => $paginatedBooks,
             "current_menu" => "pret",
             'form' => $form->createView(),
             'formBorrow' => $formBorrow->createView(),
             ]);
+    }
+
+
+    /**
+     * @Route("/search", name="book_search", methods={"GET", "POST"})
+     */
+    public function searchBook(BookRepository $bookRepository, Request $request): Response
+    {
+      $formSearch = $this->createForm(SearchBookType::class);
+      $formSearch->handleRequest($request);
+      $books = null;
+      if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+           $title = $formSearch->getData()["title"];
+           $books = $this->getDoctrine()->getRepository(Book::class)->findBy(['title' => $title ]);
+        }
+      return $this->render('book/search.html.twig', [
+          'books' => $books,
+          "current_menu" => "pret",
+          'formSearch' => $formSearch->createView(),
+          ]);
     }
 
     /**
@@ -166,4 +201,5 @@ class BookController extends AbstractController
       }
       return $this->redirectToRoute('book_index');
     }
+
 }
