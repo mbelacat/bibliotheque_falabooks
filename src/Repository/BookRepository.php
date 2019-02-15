@@ -50,8 +50,9 @@ class BookRepository extends ServiceEntityRepository
        ->getQuery()
        ->getOneOrNullResult();
    }
+   
 
-  
+
 
     /*
     public function findOneBySomeField($value): ?Book

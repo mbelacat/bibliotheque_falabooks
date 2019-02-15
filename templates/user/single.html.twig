@@ -1,6 +1,7 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}{{ user.firstname }} {{ user.lastname }} - Emprunteur - Falabooks{% endblock %}
+{% block library %}{{user.Library.name}}{% endblock %}
 
 {% block body %}
 <div class="d-flex justify-content-end mb-4">
@@ -46,6 +47,7 @@
         <p>Prénom : <span class="font-weight-bold">{{ user.firstname }}</span></p>
         <p>Identifiant : <span class="font-weight-bold">{{ user.login }}</span></p>
         <p class="card-text">Email : <span class="font-weight-bold">{{ user.email }}</span></p>
+        <p>Bibliothèque : <span class="font-weight-bold">{{ user.Library.name }}</span></p>
       </div>
       <div class="card-footer text-center">
         <a href="#" class="btn btn-primary">Editer la fiche emprunteur</a>

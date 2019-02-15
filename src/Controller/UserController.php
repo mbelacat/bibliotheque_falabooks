@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+
 use App\Entity\User;
 use App\Entity\Book;
 
@@ -29,11 +31,13 @@ class UserController extends AbstractController
     /**
      * @Route("/users", name="users")
      */
-    public function index()
+    public function index(UserRepository $userRepository)
     {
-        $repository = $this->getDoctrine()->getRepository(User::class);
+        $library = $this->getUser()->getLibrary();
+        //$repository = $this->getDoctrine()->getRepository(User::class);
         // look for *all* User objects
-        $users = $repository->findAll();
+        $users = $this->getDoctrine()->getRepository(User::class)->findUsersByLibrary($library);
+        //$users = $repository-->findUsersByLibrary($library);
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',"users"=> $users, "current_menu" => "user"
         ]);

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Library;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -31,6 +32,19 @@ class UserRepository extends ServiceEntityRepository
        ->getOneOrNullResult();
 
    }
+
+   public function findUsersByLibrary(int $id): ?User
+   {
+     return $this->createQueryBuilder('u')
+       ->addSelect('u')
+       ->leftJoin('u.library', 'l')
+       ->andWhere('u.library = :id')
+       ->setParameter('id', $id)
+       ->getQuery()
+       ->getOneOrNullResult();
+
+   }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
