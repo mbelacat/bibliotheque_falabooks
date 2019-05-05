@@ -5,12 +5,13 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Service\CategoryHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
+use Doctrine\ORM\EntityManagerInterface;
 /**
  * Require ROLE_ADMIN for *every* controller method in this class.
  *
@@ -32,23 +33,17 @@ class CategoryController extends AbstractController
     /**
      * @Route("/new", name="category_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+      $categoryHandler = new CategoryHandler($this->createForm(CategoryType::class, new Category()),$request, $em);
+      if ($categoryHandler->process()){
+        return $this->redirectToRoute('category_index');
+      }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
-            return $this->redirectToRoute('category_index');
-        }
-
-        return $this->render('category/new.html.twig', [
-            'category' => $category,
-            'form' => $form->createView(),
-        ]);
+      return $this->render('category/new.html.twig', [
+            'category' => $categoryHandler->getAll(),
+            'form' => $categoryHandler->getForm()->createView(),
+      ]);
     }
 
     /**
